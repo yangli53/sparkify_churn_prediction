@@ -10,11 +10,12 @@ according to studies.
 In this project, I predicted the customer churn of a fictitious company Sparkify that provides music streaming service as Spotify or 
 Pandora does. Customers can use the service through a free tier plan with roll advertisements playing between songs or through a 
 subscription plan with a month flat rate. Customers can upgrade, downgrade or cancel the service at any time. Additionally, I built a 
-pipeline to import, clean and analyze data to track user engagement and identify potential churn users.
+pipeline (`Scale_up.py`) to import, clean and analyze data to track user engagement and identify potential churn users.
 
 ## Data
 
-I first worked on a mini subset locally, and then deployed a Spark cluster on the cloud using IBM Cloud to analyze a larger amount of data.
+I first worked on a mini subset (see result at `Sparkify_mini.ipynb`) locally, and then deployed a Spark cluster on the cloud using IBM
+Cloud to analyze a larger amount of data (see result at `Sparkify_midi.ipynb`).
 
 ## Libraries
 
