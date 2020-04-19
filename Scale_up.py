@@ -157,13 +157,12 @@ def engineer_feature(df, save_path):
 
 
 # preprocess data for model training
-# build a pipeline to preprocess the data
 def preprocess(data):
     """
-    Preprocess data for model training: log transformation, 
-                                        combine features, 
-                                        standardize vectors, 
-                                        split data
+    Preprocess data for model training: transform skewed features,
+                                        combine features,
+                                        scale features, 
+                                        and split data
     
     INPUT:
         data - data containing label and features
@@ -171,15 +170,15 @@ def preprocess(data):
     OUTPUT:
         train, test sets
     """
-    # apply log transformation to numAds, numDowngrade and numThumbdown
+    # transform skewed features
     data_pd = data.toPandas()
-    to_trans = ['numAds', 'numDowngrade', 'numThumbdown']
+    skewed = ['numAds', 'numDowngrade', 'numThumbdown']
 
-    for col in to_trans:
+    for col in skewed:
         data_pd[col] = data_pd[col].astype('float64').replace(0.0, 0.01) 
         data_pd[col] = np.log(data_pd[col])
     
-    # convert df to spark df
+    # convert pandas df to spark df
     data = spark.createDataFrame(data_pd)
     
     # combine features to a vector
@@ -200,18 +199,20 @@ def preprocess(data):
 # display model evaluation result
 def model_eval(result, evaluator, test_set):
     """
-    Display accuracy, recall and F1 score of test set
+    Display accuracy, precision, recall and F1 score of test set
     
     INPUT:
         result - result containing predictions (df)
         evaluator - evaluator
         test_set - name of dataset used in prediction (str)
-    """   
+    """    
     accuracy = evaluator.evaluate(result, {evaluator.metricName: 'accuracy'})
+    precision = evaluator.evaluate(result, {evaluator.metricName: 'weightedPrecision'})
     recall = evaluator.evaluate(result, {evaluator.metricName: 'weightedRecall'})
     f1 = evaluator.evaluate(result, {evaluator.metricName: 'f1'})
     
     print(f'\nAccuracy of {test_set} set: {accuracy}')
+    print(f'Precision of {test_set} set: {precision}')
     print(f'Recall of {test_set} set: {recall}')
     print(f'F1 score of {test_set} set: {f1}')
     
