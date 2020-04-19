@@ -30,18 +30,11 @@ Libraries I used in this project include:
 
 ## Result
 
-My analyses focused on the activities during the most recent 10 days. The result from the medium dataset is more convincing. It indicates 
-that number of downgrade (in the past 10 days), number of advertisements (in the past 10 days) and days being a user are the top 3 
-important features in predicting customer churn. If a new user has some downgrades recently, this user is more likely to churn. The reason 
-could be there are too many advertisements or too many disliked songs. 
+My analyses focused on the activities during the most recent 10 days. The result from the mini dataset indicates that **days being a user, number of thumbs down (in the past 10 days) and number of advertisements (in the past 10 days)** are the top 3 important features in predicting customer churn. 
 
-My first suggestion for Sparkify is to launch a 7-day free trial plan to improve user experience. During the trial, the user can enjoy 
-all the benefits as a paid subscriber. At the end of the trial, the user has the option of continuing the service as a paid subscriber or 
-downgrading to the free plan. This action will encourage free users to experience the service without ads. Sparkify can perform an A/B test
-to determine if this action will reduce customer churn.
+My first suggestion for Sparkify is to **launch a 7-day free trial plan** to improve user experience. During the trial, the user can enjoy the service without ads. At the end of the trial, the user has the option of continuing the service as a paid subscriber or downgrading to the free plan. Sparkify can perform an A/B test to determine if this action will reduce customer churn.
 
-Another suggestion is to improve the personalization service. This action will recommend songs that the user may like thereby increasing
-the number of thumbs up. This can be done by building a collaborative filtering recommender.
+Another suggestion is to **improve the personalization service**. This action will recommend songs that the user may like thereby reducing the number of thumbs down. This can be done by building a collaborative filtering recommender.
 
 I created a [blog post](https://medium.com/@fivecentsly/predict-customer-churn-using-spark-71ac4f3b6b14) explaining the details of the analyses if you're interested.
 
