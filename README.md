@@ -9,13 +9,12 @@ according to studies.
 
 In this project, I predicted the customer churn of a fictitious company Sparkify that provides music streaming service as Spotify or 
 Pandora does. Customers can use the service through a free tier plan with roll advertisements playing between songs or through a 
-subscription plan with a month flat rate. Customers can upgrade, downgrade or cancel the service at any time. Additionally, I built a 
-pipeline (`Scale_up.py`) to import, clean and analyze data to track user engagement and identify potential churn users.
+subscription plan with a month flat rate. Customers can upgrade, downgrade or cancel the service at any time. Additionally, I wrote a scalable script (`Scale_up.py`) to clean and extract features from a large amount of data for analysis to track user engagement and identify potential churn users.
 
 ## Data
 
 I first worked on a mini subset (see result at `Sparkify_mini.ipynb`) locally, and then deployed a Spark cluster on the cloud using IBM
-Cloud to analyze a larger amount of data (see result at `Sparkify_midi.ipynb`).
+Cloud to analyze a larger amount of data.
 
 ## Libraries
 
@@ -30,7 +29,25 @@ Libraries I used in this project include:
 
 ## Result
 
-My analyses focused on the activities during the most recent 10 days. The result from the mini dataset indicates that **days being a user, number of thumbs down (in the past 10 days) and number of advertisements (in the past 10 days)** are the top 3 important features in predicting customer churn. 
+The mini dataset has 225 unique users with 278,154 valid events and 18 columns. The data was collected from Oct 1, 2018 to Dec 3, 2018. Given that I only have 2 months of data and there are new registered users and churn users during that, **I decide to use the most recent 10 days of data to predict churn**. For nonchurn users, this means 10 days of data before the last event; for churn users, this means 10 days of data before cancellation. I excluded users with less than 10 days of data including new users who registered in late Nov and churn users who churned within 10 days of registration. Finally, I included 202 unique users (40 churn users) and their most recent 10 days of data.
+
+After exploratory data analysis, I found that the following features are more promising in predicting churn:
+- user's gender
+- days being a user
+- number of thumbs down
+- number of downgrades
+- number of ads
+
+I extracted these features and performed necessary feature engineering. 
+
+To create a baseline model, I labeled all predictions as "0" because the number of churn users is small. If I predict all of them as nonchurn, I will have relatively better accuracy and F1 score. **The baseline model has an accuracy of 0.82 and an F1 score of 0.75**. F1 score is a better metric in this project because the dataset is imbalanced. 
+
+Then I compared three different models based on training time, accuracy and F1 score. I decide to choose **random forest** because:
+- it requires the least time to train
+- it performs well as logistic regression or gradient-boosted tree does
+- it generalizes better than gradient-boosted tree
+
+After hyperparameter tuning, **the final model resulted in an F1 score of 0.88 with 17% improvement from baseline**. The plot of feature importance indicates that **days being a user, number of thumbs down (in the past 10 days) and number of advertisements (in the past 10 days)** are the top 3 important features in predicting customer churn. 
 
 My first suggestion for Sparkify is to **launch a 7-day free trial plan** to improve user experience. During the trial, the user can enjoy the service without ads. At the end of the trial, the user has the option of continuing the service as a paid subscriber or downgrading to the free plan. Sparkify can perform an A/B test to determine if this action will reduce customer churn.
 
