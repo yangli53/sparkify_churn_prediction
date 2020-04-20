@@ -33,9 +33,8 @@ def load_data(data_path):
     
     return df
 
-
 # clean data
-def clean_data(df):
+def clean_data(df, save_path):
     """
     Clean df
     
@@ -48,49 +47,52 @@ def clean_data(df):
              replaced artists and songs with None
     """
     df = df.filter(df.userId != '')
-    df = df.fillna({'length':0, 'artist':'None', 'song':'None'})   
+    df = df.fillna({'length':0, 'artist':'None', 'song':'None'})
+    
+    # save df
+    df.write.csv(save_path)
     
     return df
 
 
-# extract features
-def extract_feature(df, save_path):
+# filter data
+def filter_data(df, save_path):
     """
-    Extract features and create new columns
+    Create necessary new columns and filter data to include the most recent 10 days of data
     
     INPUT:
         df - clean df
         
     OUTPUT:
-        df - df with extracted features
+        df - df with the most recent 10 days of data
     """
-    # define churn
+    # create a new column churn
     flag_churn_event = udf(lambda x: 1 if x == 'Cancellation Confirmation' else 0, IntegerType())
     df = df.withColumn('churnEvent', flag_churn_event('page'))
 
     windowval = Window.partitionBy('userId')
     df = df.withColumn('churn', max('churnEvent').over(windowval))
     
-    # create a column dataRange
+    # create a new column dataRange
     df = df.withColumn('dataRange', 
                        ((max('ts').over(windowval)-min('ts').over(windowval))/1000/3600/24).cast('int'))
     
-    # create a column countDown 
+    # create a new column countDown 
     df = df.withColumn('lastEvent', max('ts').over(windowval))
     df = df.withColumn('countDown', ((df.lastEvent-df.ts)/1000/3600/24).cast('int'))
     
     # filter data
     df = df.filter((df.dataRange >= 10) & (df.countDown <= 10))
     
-    # create a column thumbDown
+    # create a new column thumbDown
     thrumb_down = udf(lambda x: 1 if x == 'Thumbs Down' else 0, IntegerType())
     df = df.withColumn('thumbDown', thrumb_down('page'))
     
-    # create a column downgrade
+    # create a new column downgrade
     downgrade = udf(lambda x: 1 if x == 'Downgrade' else 0, IntegerType())
     df = df.withColumn('downgrade', downgrade('page'))
     
-    # create a column ads
+    # create a new column ads
     roll_advert = udf(lambda x: 1 if x == 'Roll Advert' else 0, IntegerType())
     df = df.withColumn('ads', roll_advert('page'))
     
@@ -100,16 +102,16 @@ def extract_feature(df, save_path):
     return df
 
 
-# create data with engineered features
-def engineer_feature(df, save_path):
+# create data with extracted features
+def extract_feature(df, save_path):
     """
-    Create a new df with engineered features for model training
+    Create a new df with extracted features 
     
     INPUT:
-        df - df containing extracted features
+        df - df with filtered data
         
     OUTPUT:
-        data - new df with engineered features
+        data - new df with extracted features and label
     """
     # convert gender to numerical values F: 0, M: 1
     df_gender = df \
@@ -236,9 +238,9 @@ def build_model(model, model_name):
     paramGrid = ParamGridBuilder().build()
 
     crossval_model = CrossValidator(estimator=model,
-                                    estimatorParamMaps=paramGrid,
-                                    evaluator=MulticlassClassificationEvaluator(),
-                                    numFolds=3)
+                                  estimatorParamMaps=paramGrid,
+                                  evaluator=MulticlassClassificationEvaluator(),
+                                  numFolds=3)
 
     # train the training set and calculate training time
     start = time.time()
