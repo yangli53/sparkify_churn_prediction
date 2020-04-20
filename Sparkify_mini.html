@@ -13483,13 +13483,20 @@ only showing top 5 rows
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Write a scalable script to clean data.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># build a pipeline to clean data</span>
-<span class="k">def</span> <span class="nf">clean_data</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">clean_data</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Clean df</span>
 <span class="sd">    </span>
@@ -13505,19 +13512,6 @@ only showing top 5 rows
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">({</span><span class="s1">&#39;length&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;artist&#39;</span><span class="p">:</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;song&#39;</span><span class="p">:</span><span class="s1">&#39;None&#39;</span><span class="p">})</span>
     
     <span class="k">return</span> <span class="n">df</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_valid</span> <span class="o">=</span> <span class="n">clean_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13681,14 +13675,7 @@ only showing top 5 rows
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Explore-Data">Explore Data<a class="anchor-link" href="#Explore-Data">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Check-the-timestamp">Check the timestamp<a class="anchor-link" href="#Check-the-timestamp">&#182;</a></h4>
+<h3 id="Explore-Data">Explore Data<a class="anchor-link" href="#Explore-Data">&#182;</a></h3><h4 id="Check-the-timestamp">Check the timestamp<a class="anchor-link" href="#Check-the-timestamp">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -15129,21 +15116,28 @@ Name: serviceDays, dtype: float64</pre>
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Write a scalable script to create necessary new columns and filter data.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># build a pipeline to extract data</span>
-<span class="k">def</span> <span class="nf">extract_feature</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">filter_data</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extract features and create new columns</span>
+<span class="sd">    Create necessary new columns and filter data to include the most recent 10 days of data</span>
 <span class="sd">    </span>
 <span class="sd">    INPUT:</span>
 <span class="sd">        df - clean df</span>
 <span class="sd">        </span>
 <span class="sd">    OUTPUT:</span>
-<span class="sd">        df - df with extracted features</span>
+<span class="sd">        df - df with the most recent 10 days of data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># create a new column churn</span>
     <span class="n">flag_churn_event</span> <span class="o">=</span> <span class="n">udf</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s1">&#39;Cancellation Confirmation&#39;</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span> <span class="n">IntegerType</span><span class="p">())</span>
@@ -15183,30 +15177,10 @@ Name: serviceDays, dtype: float64</pre>
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_model</span> <span class="o">=</span> <span class="n">extract_feature</span><span class="p">(</span><span class="n">df_valid</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Feature-Engineering">Feature Engineering<a class="anchor-link" href="#Feature-Engineering">&#182;</a></h1><p>Once you've familiarized yourself with the data, build out the features you find promising to train your model on. To work with the full dataset, you can follow the following steps.</p>
-<ul>
-<li>Write a script to extract the necessary features from the smaller subset of data</li>
-<li>Ensure that your script is scalable, using the best practices discussed in Lesson 3</li>
-<li>Try your script on the full data set, debugging your script if necessary</li>
-</ul>
-<p>If you are working in the classroom workspace, you can just extract features based on the small subset of data contained here. Be sure to transfer over this work to the larger dataset when you work on your Spark cluster.</p>
-
+<h1 id="Feature-Engineering">Feature Engineering<a class="anchor-link" href="#Feature-Engineering">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -15349,21 +15323,28 @@ only showing top 5 rows
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Write a scalable script to extract features.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># build a pipeline to engineer features</span>
-<span class="k">def</span> <span class="nf">engineer_feature</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">extract_feature</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a new df with engineered features for model training</span>
+<span class="sd">    Create a new df with extracted features </span>
 <span class="sd">    </span>
 <span class="sd">    INPUT:</span>
-<span class="sd">        df - df containing extracted features</span>
+<span class="sd">        df - df with filtered data</span>
 <span class="sd">        </span>
 <span class="sd">    OUTPUT:</span>
-<span class="sd">        data - new df with engineered features</span>
+<span class="sd">        data - new df with extracted features and label</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># convert gender to numerical values F: 0, M: 1</span>
     <span class="n">df_gender</span> <span class="o">=</span> <span class="n">df</span> \
@@ -15412,23 +15393,10 @@ only showing top 5 rows
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">engineer_feature</span><span class="p">(</span><span class="n">df_model</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Modeling">Modeling<a class="anchor-link" href="#Modeling">&#182;</a></h1><h3 id="Transform-skewed-numerical-features">Transform skewed numerical features<a class="anchor-link" href="#Transform-skewed-numerical-features">&#182;</a></h3><p>A dataset may contain features whose values tend to lie near a single number, but also have non-trivial values vastly larger or smaller than that single number. Algorithms can be sensitive to such distributions of values and can underperform if the range is not properly normalized. I will check the skewness of all of the numerical features. For highly-skewed feature distributions, I will apply a <strong>log transformation</strong> on the data to reduce the range of values caused by outliers thereby improving the model's performance. I need to translate the values by a small amount above 0 (e.g. 0.01) because the logarithm of 0 is undefined.</p>
+<h3 id="Transform-skewed-numerical-features">Transform skewed numerical features<a class="anchor-link" href="#Transform-skewed-numerical-features">&#182;</a></h3><p>A dataset may contain features whose values tend to lie near a single number, but also have non-trivial values vastly larger or smaller than that single number. Algorithms can be sensitive to such distributions of values and can underperform if the range is not properly normalized. I will check the skewness of all of the numerical features. For highly-skewed feature distributions, I will apply a <strong>log transformation</strong> on the data to reduce the range of values caused by outliers thereby improving the model's performance. I need to translate the values by a small amount above 0 (e.g. 0.01) because the logarithm of 0 is undefined.</p>
 
 </div>
 </div>
@@ -15750,13 +15718,20 @@ only showing top 5 rows
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Write a scalable script to preprocess data for model training.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># build a pipeline to preprocess the data</span>
-<span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Preprocess data for model training: transform skewed features,</span>
 <span class="sd">                                        combine features,</span>
@@ -15800,23 +15775,10 @@ only showing top 5 rows
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Baseline-model">Baseline model<a class="anchor-link" href="#Baseline-model">&#182;</a></h3><p>To create a baseline model, I will label all predictions as "0" because the number of churn users is small. If I predict all of them as nonchurn, I will have relatively better accuracy and F1 score.</p>
+<h1 id="Modeling">Modeling<a class="anchor-link" href="#Modeling">&#182;</a></h1><h3 id="Baseline-model">Baseline model<a class="anchor-link" href="#Baseline-model">&#182;</a></h3><p>To create a baseline model, I will label all predictions as "0" because the number of churn users is small. If I predict all of them as nonchurn, I will have relatively better accuracy and F1 score.</p>
 
 </div>
 </div>
@@ -15903,7 +15865,7 @@ F1 score of test set: 0.749512036434613
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The baseline model has a good accuracy of 0.82 because the dataset is imbalanced. Therefore, <strong>F1 score is a better metric</strong> in this project. I also checked precision and recall. Depending on the cost of retaining existing customers versus attracting new customers, I will decide which metric I will use.</p>
+<p><strong>The baseline model has an accuracy of 0.82 and an F1 score of 0.75</strong>. <strong>F1 score is a better metric</strong> in this project because the dataset is imbalanced. I also checked precision and recall. Depending on the cost of retaining existing customers versus attracting new customers, I will decide which metric I should use.</p>
 
 </div>
 </div>
@@ -15911,7 +15873,7 @@ F1 score of test set: 0.749512036434613
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Model-selection">Model selection<a class="anchor-link" href="#Model-selection">&#182;</a></h3><p>I will compare three different models based on training time, accuracy, precision, recall and F1 score. Then I will use cross validation to minimize overfitting, and grid search to tune the model. After that, I will pick the best model based on F1 score, train it on training set, and evaluate it on test set. Finally, I will plot the feature importance.</p>
+<h3 id="Model-selection">Model selection<a class="anchor-link" href="#Model-selection">&#182;</a></h3><p>I will compare three different models based on training time, accuracy and F1 score. Then I will use cross validation to minimize overfitting, and grid search to tune the model. After that, I will pick the best model based on F1 score, train it on training set, and evaluate it on test set. Finally, I will plot the feature importance.</p>
 
 </div>
 </div>
@@ -16122,7 +16084,7 @@ F1 score of test set: 0.8918601923528031
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>According to the results above, I decide to choose <strong>random forest</strong> because:</p>
 <ol>
-<li>it requires least time to train</li>
+<li>it requires the least time to train</li>
 <li>it performs well as logistic regression or gradient-boosted tree does</li>
 <li>it generalizes better than gradient-boosted tree</li>
 </ol>
@@ -16339,7 +16301,7 @@ F1 score of test set: 0.8918601923528031
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>After hyperparameter tuning, the F1 score of the final model reaches 0.88 with 17% improvement from the baseline model.</p>
+<p>After hyperparameter tuning, <strong>the final model results in an F1 score of 0.88 with 17% improvement from baseline</strong>.</p>
 
 </div>
 </div>
@@ -16387,73 +16349,6 @@ F1 score of test set: 0.8918601923528031
 </pre></div>
 
     </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cols</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[84]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([&#39;gender&#39;, &#39;serviceDays&#39;, &#39;numThumbdown&#39;, &#39;numDowngrade&#39;, &#39;numAds&#39;], 
-      dtype=&#39;&lt;U12&#39;)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[85]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">importances</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[85]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([ 0.03482325,  0.49720096,  0.21172906,  0.12626919,  0.12997754])</pre>
-</div>
-
-</div>
-
 </div>
 </div>
 
