@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>Sparkify</title>
+<title>Sparkify_mini</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13056,25 +13056,6 @@ ul.typeahead-list  > li > a.pull-right {
 .ansi-bold { font-weight: bold; }
 
     </style>
-<style type="text/css">
-    body[data-notebook-name] > #header #header-container:not(.show-panel), /* body has data-notebook-name attribute when 
-a notebook is open. this rule won't be applied when the notebook is not open (in 404 view for example) */
-body[data-notebook-name] #menubar-container #maintoolbar:not(.show-panel),
-body[data-notebook-name] #menubar-container ul.navbar-nav:not(.show-panel) {
-  display: none;
-}
-
-#menubar.only-panel #menus.navbar-default {
-    background: #fff;
-    border-color: #fff;
-}
-
-.toolbar.with-statusbar{
-    margin-top: 3px;
-    margin-bottom: 0;
-}
-
-    </style>
 
 
 <style type="text/css">
@@ -13108,7 +13089,7 @@ div#notebook {
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -14169,6 +14150,8 @@ Name: serviceDays, dtype: float64</pre>
 <p>Features that may predict churn include:</p>
 <ol>
 <li>time spent on the service</li>
+</ol>
+<ul>
 <li>number of songs listened</li>
 <li>number of artists listened</li>
 <li>number of songs added to playlist</li>
@@ -14183,7 +14166,7 @@ Name: serviceDays, dtype: float64</pre>
 <li>number of ads</li>
 <li>user's gender</li>
 <li>days being a user</li>
-</ol>
+</ul>
 <p>Features 1-13 are calculated using the most recent 10 days of data.</p>
 
 </div>
@@ -15107,11 +15090,13 @@ Name: serviceDays, dtype: float64</pre>
 <p>I decide to use the following features to train my model:</p>
 <ol>
 <li>user's gender</li>
+</ol>
+<ul>
 <li>days being a user</li>
 <li>number of thumbs down</li>
 <li>number of downgrades</li>
 <li>number of ads</li>
-</ol>
+</ul>
 
 </div>
 </div>
@@ -16301,7 +16286,7 @@ F1 score of test set: 0.8918601923528031
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>After hyperparameter tuning, <strong>the final model results in an F1 score of 0.88 with 17% improvement from baseline</strong>.</p>
+<p>After hyperparameter tuning, <strong>the final model results in an F1 score of 0.89 with 19% improvement from baseline</strong>.</p>
 
 </div>
 </div>

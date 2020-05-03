@@ -47,7 +47,7 @@ Then I compared three different models based on training time, accuracy and F1 s
 - it performs well as logistic regression or gradient-boosted tree does
 - it generalizes better than gradient-boosted tree
 
-After hyperparameter tuning, **the final model resulted in an F1 score of 0.88 with 17% improvement from baseline**. The plot of feature importance indicates that the following 3 features have the most predictive power in predicting customer churn:
+After hyperparameter tuning, **the final model resulted in an F1 score of 0.89 with 19% improvement from baseline**. The plot of feature importance indicates that the following 3 features have the most predictive power in predicting customer churn:
 - days being a user
 - number of thumbs down (in the past 10 days) 
 - number of advertisements (in the past 10 days)
