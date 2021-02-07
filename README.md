@@ -13,7 +13,7 @@ subscription plan with a month flat rate. Customers can upgrade, downgrade or ca
 
 ## Data
 
-I first worked on a mini subset (see result at `Sparkify_mini.ipynb`) locally, and then deployed a Spark cluster on AWS to analyze the dataset (12GB).
+I first worked on a mini subset (see result at `Sparkify_mini.ipynb`) locally, and then deployed a Spark cluster on IBM Cloud to analyze a larger dataset.
 
 ## Libraries
 
